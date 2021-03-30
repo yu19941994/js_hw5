@@ -101,7 +101,7 @@ function showMenu (chosenCounty) {
                             <div class="d-flex flex-column justify-content-between height--inside">
                               <div>
                                 <p class="bg--primary mb-0 text-white py-1 px-2 width--tag--sm position-absolute z-index--100 top left">${item.star}</p>
-                                <h5 class="card-title text--primary border-bottom--primary">${item.title}</h5>
+                                <h5 class="card-title border-bottom--primary"><a href="#" class="text-decoration-none text--primary">${item.title}</a></h5>
                                 <p class="card-text text--gray">${item.description}</p>
                               </div>
                               <div class="d-flex justify-content-between align-items-center">
