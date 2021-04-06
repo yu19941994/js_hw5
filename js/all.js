@@ -1,5 +1,6 @@
 let data = [
   {
+    id: 1,
     county: '台北',
     star: 8.6,
     title: '綠島自由行套裝行程',
@@ -9,6 +10,7 @@ let data = [
     picUrl: 'images/photo-1477894387642-00a731c511b3.png'
   },
   {
+    id: 2,
     county: '台北',
     star: 8.2,
     title: '清境高空觀景步道二日遊',
@@ -18,6 +20,7 @@ let data = [
     picUrl: 'images/photo-1526772662000-3f88f10405ff.png'
   },
   {
+    id: 3,
     county: '台中',
     star: 9.2,
     title: '南庄度假村露營車二日遊',
@@ -40,11 +43,12 @@ const formCost = document.querySelector('#cost')
 const formGroup = document.querySelector('#group')
 const formStar = document.querySelector('#star')
 const formDescription = document.querySelector('#description')
+let initialId = 4
 
 let totalContent = ''
 let searchTotal = 0
 
-function init () {
+function printMenu (data) {
   totalContent = ''
   searchTotal = 0
   data.forEach(item => {
@@ -82,48 +86,29 @@ function init () {
   searchTimes.innerHTML = `<p class="h6 mb-0 text--gray">本次搜尋共 ${searchTotal} 筆資料</p>`
 }
 
+function init () {
+  printMenu(data)
+}
+
 function showMenu (chosenCounty) {
-  totalContent = ''
   let filterData
-  searchTotal = 0
 
   if(chosenCounty === '全部地區') {
     filterData = data
   }else{
     filterData = data.filter(e => e.county === chosenCounty)
   }
-  filterData.forEach(item => {
-    totalContent += `<li class="col-12 col-md-6 col-lg-4 mb--7 position-relative">
-                        <p class="bg--secondary mb-0 text-white py-2 px--7 width--tag position-absolute z-index--100 top font--1">${item.county}</p>
-                        <div class="card">
-                          <img src="${item.picUrl}" class="card-img-top" alt="menu1">
-                          <div class="card-body position-relative">
-                            <div class="d-flex flex-column justify-content-between height--inside">
-                              <div>
-                                <p class="bg--primary mb-0 text-white py-1 px-2 width--tag--sm position-absolute z-index--100 top left">${item.star}</p>
-                                <h5 class="card-title border-bottom--primary"><a href="#" class="text-decoration-none text--primary">${item.title}</a></h5>
-                                <p class="card-text text--gray">${item.description}</p>
-                              </div>
-                              <div class="d-flex justify-content-between align-items-center">
-                                <div class="d-flex">
-                                  <span class="material-icons text--primary">
-                                    error
-                                  </span>
-                                  <p class="text--primary mb-0">剩下最後 ${item.number} 組</p>
-                                </div> 
-                                <div class="d-flex align-items-center">
-                                  <p class="text--primary mb-0">TWD</p>
-                                  <p class="text--primary mb-0 h2">$${item.cost}</p>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </li>`
-  })
-  tripMenu.innerHTML = totalContent
-  searchTotal = filterData.length
-  searchTimes.innerHTML = `<p class="h6 mb-0 text--gray">本次搜尋共 ${searchTotal} 筆資料</p>`
+  printMenu(filterData)
+}
+
+function clearForm () {
+  formName.value = ''
+  formUrl.value = ''
+  formArea.value = ''
+  formCost.value = ''
+  formGroup.value = ''
+  formStar.value = ''
+  formDescription.value = ''
 }
 
 function searchHandler (e) {
@@ -133,6 +118,7 @@ function searchHandler (e) {
 function addMenu (e) {
   e.preventDefault()
   let obj = {}
+  obj.id = initialId++
   obj.county = formArea.value
   obj.star = formStar.value
   obj.title = formName.value
@@ -144,6 +130,7 @@ function addMenu (e) {
     alert('您有空格尚未填寫')
   }else{
     data.push(obj)
+    clearForm()
     init()
   }
 }
